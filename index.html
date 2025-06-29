@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mega Menu with Hover</title>
+
+  <!-- Font Awesome for social media icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    /* Root variables for light theme */
+    :root {
+      --bg-color: white;
+      --text-color: #333;
+      --link-hover: #2d6cdf;
+      --button-bg: transparent;
+      --button-text: #2d6cdf;
+      --button-border: #2d6cdf;
+      --dropdown-bg: #eaeaea;
+    }
+
+    /* Variables for dark mode */
+    body.dark {
+      --bg-color: #121212;
+      --text-color: #f2f2f2;
+      --link-hover: #90caf9;
+      --button-bg: #2d6cdf;
+      --button-text: white;
+      --button-border: #2d6cdf;
+      --dropdown-bg: #1e1e1e;
+    }
+
+    /* General reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: 0.3s ease;
+      overflow-x: hidden;
+    }
+
+    /* ========== Header and Navbar ========== */
+    header {
+      background-color: var(--bg-color);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 14px 30px;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2d6cdf;
+    }
+
+    .logo span {
+      color: #999;
+    }
+
+    .nav-container {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-size: 16px;
+    }
+
+    /* ========== Buttons (Dark Mode + Sign In) ========== */
+    .nav-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: 1px solid var(--button-border);
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--link-hover);
+      color: white;
+    }
+
+    /* ========== Toggle Switch for Dark Mode ========== */
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+      display: inline-block;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.4s;
+      border-radius: 30px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked+.slider {
+      background-color: #2d6cdf;
+    }
+
+    input:checked+.slider:before {
+      transform: translateX(24px);
+    }
+
+    /* ========== Mode Toggle Label ========== */
+    .mode-toggle {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+
+    /* ========== Mega Menu Dropdown ========== */
+    .dropdown {
+      position: relative;
+    }
+
+    .mega-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 500px;
+      background-color: var(--dropdown-bg);
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(42, 29, 29, 0.15);
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+      z-index: 99;
+    }
+
+    .dropdown:hover .mega-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .mega-left ul {
+      list-style: none;
+    }
+
+    .mega-left li {
+      padding: 6px 0;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+
+    .mega-left li:hover {
+      color: var(--link-hover);
+    }
+
+    .mega-right img {
+      width: 120px;
+      border-radius: 8px;
+    }
+
+    /* ========== Hero Section ========== */
+    main {
+      padding: 100px 50px;
+      text-align: center;
+      background-image: url("bkmain.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: rgb(253, 253, 253);
+      text-shadow: 2px 2px 4px rgba(6, 6, 6, 0.5);
+    }
+
+    /* ========== Footer ========== */
+    footer {
+      background-color: var(--dropdown-bg);
+      color: var(--text-color);
+      padding: 50px 30px 20px;
+      border-top: 1px solid #f9eded;
+      font-size: 15px;
+      text-align: center;
+    }
+
+    .footer-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto 30px;
+    }
+
+    .footer-section {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      min-width: 200px;
+    }
+
+    .footer-section h4 {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-section ul li a {
+      text-decoration: none;
+      color: var(--text-color);
+      transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      color: var(--link-hover);
+    }
+
+    .footer-section .logo {
+      margin-bottom: 10px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      font-size: 20px;
+    }
+
+    .social-icons a {
+      color: #747171;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: var(--link-hover);
+    }
+
+    .disclaimer {
+      font-size: 12px;
+      color: #382d2d;
+      margin-top: 10px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .bottom-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .bottom-links a {
+      text-decoration: none;
+      color: var(--text-color);
+    }
+
+    .bottom-links a:hover {
+      color: var(--link-hover);
+    }
+
+    /* ========== Responsive Navigation ========== */
+    .hamburger-menu {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+      z-index: 101;
+    }
+
+    .hamburger-menu .bar {
+      width: 25px;
+      height: 3px;
+      background-color: var(--text-color);
+    }
+
+    @media (max-width: 780px) {
+      .hamburger-menu {
+        display: flex;
+      }
+
+      .nav-container {
+        display: none;
+      }
+
+      body.mobile-menu-open .nav-container {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 60px;
+        right: 0;
+        width: 250px;
+        height: calc(100% - 60px);
+        background-color: var(--dropdown-bg);
+        padding: 30px 20px;
+        z-index: 100;
+        gap: 25px;
+        align-items: flex-start;
+        box-shadow: -2px 0 10px rgb(58, 58, 58);
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .nav-buttons {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ========== Header ========== -->
+  <header>
+    <div class="logo">better<span>Lyf</span></div>
+
+    <div class="hamburger-menu" onclick="toggleMenu()">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+
+    <div class="nav-container">
+      <div class="nav-links">
+        <div class="dropdown">
+          <a href="#">We Help With</a>
+          <div class="mega-menu">
+            <div class="mega-left">
+              <ul>
+                <li>Confidence</li>
+                <li>Stress & Anxiety</li>
+                <li>Relationship Issues</li>
+                <li>Career Confusion</li>
+              </ul>
+            </div>
+            <div class="mega-right">
+              <img src="bkmain.png" alt="Preview" />
+            </div>
+          </div>
+        </div>
+        <a href="#">Self Help</a>
+        <a href="#">Counsellors</a>
+        <a href="#">Collaborations</a>
+      </div>
+
+      <div class="nav-buttons">
+        <div class="mode-toggle">
+          <span id="modeLabel">Light Mode</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="modeToggle" onchange="toggleMode()" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+
+        <button class="btn">Sign In</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== Main Banner ========== -->
+  <main>
+    <h2>Welcome to betterLyf</h2>
+    <p>We’re here to guide you through life’s challenges — one conversation at a time.</p>
+  </main>
+
+  <!-- ========== Footer Section ========== -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="logo">better<span>Lyf</span></div>
+        <p>We’re here to guide you through life’s challenges — one conversation at a time.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h4>We Help With</h4>
+        <ul>
+          <li><a href="#">Stress & Anxiety</a></li>
+          <li><a href="#">Relationship Issues</a></li>
+          <li><a href="#">Confidence</a></li>
+          <li><a href="#">Career Confusion</a></li>
+          <li><a href="#">Trauma</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="#">Self Help</a></li>
+          <li><a href="#">Articles</a></li>
+          <li><a href="#">14 Days Program</a></li>
+          <li><a href="#">Psychiatrist Support</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Customer Support</h4>
+        <p>Mon - Sat: 9:00AM - 1:00AM IST</p>
+        <p>Sun: 10:00AM - 7:00PM IST</p>
+        <h4>Am I Stressed?</h4>
+        <ul>
+          <li><a href="#">Am I depressed?</a></li>
+          <li><a href="#">How am I sleeping?</a></li>
+          <li><a href="#">Am I anxious?</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Virzen Wellness Private Limited</p>
+      <div class="bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="#">Refund</a>
+        <a href="#">FAQ</a>
+        <a href="#">Contact</a>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      Disclaimer: We are not a crisis helpline. For emergencies, contact medical help or helpline services.
+    </div>
+  </footer>
+
+  <!-- ========== JavaScript ========== -->
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle("dark");
+
+      const isDark = document.body.classList.contains("dark");
+      document.getElementById("modeToggle").checked = isDark;
+      document.getElementById("modeLabel").textContent = isDark ? "Dark Mode" : "Light Mode";
+    }
+
+    window.onload = () => {
+      const isDark = document.body.classList.contains("dark");
+      document.getElementById("modeToggle").checked = isDark;
+      document.getElementById("modeLabel").textContent = isDark ? "Dark Mode" : "Light Mode";
+    };
+
+
+
+    function toggleMenu() {
+      document.body.classList.toggle("mobile-menu-open");
+    }
+  </script>
+
+</body>
+
+</html>
