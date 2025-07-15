@@ -215,6 +215,34 @@
       border-radius: 8px;
     }
 
+    /* ========== greeting message ========== */
+    .welcome-message {
+      text-align: center;
+      padding: 40px 20px 10px;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .color-transition {
+      animation: colorChange 5s ease-in-out infinite;
+      font-family: cursive;
+      font-weight: 600;
+    }
+
+    @keyframes colorChange {
+
+      0%,
+      100% {
+        color: #a12ae7;
+      }
+
+      50% {
+        color: #2d6cdf;
+      }
+    }
+
+
     /* ========== Hero Section ========== */
     main {
       padding: 100px 50px;
@@ -373,6 +401,202 @@
         gap: 15px;
       }
     }
+
+
+
+    /* ========== cards ========== */
+    .therapy-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .therapy-card {
+      background-color: var(--dropdown-bg);
+      border-radius: 12px;
+      padding: 25px;
+      width: 320px;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .therapy-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .therapy-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto 20px;
+    }
+
+    .therapy-card h3 {
+      margin-bottom: 12px;
+      font-size: 20px;
+      color: var(--text-color);
+    }
+
+    .therapy-card p {
+      font-size: 15px;
+      color: var(--text-color);
+      margin-bottom: 15px;
+    }
+
+    .therapy-card a {
+      text-decoration: none;
+      color: #00bcd4;
+      font-weight: bold;
+    }
+
+    .therapy-card a:hover {
+      color: var(--link-hover);
+    }
+
+    /* ========== color plate ========== */
+    .color-dropdown {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .color-dropdown i {
+      font-size: 20px;
+      margin-left: 5px;
+      color: var(--button-border);
+      transition: color 0.3s ease;
+    }
+
+    .color-options {
+      position: absolute;
+      top: 30px;
+      left: -10px;
+      display: none;
+      background-color: var(--dropdown-bg);
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      flex-direction: row;
+      gap: 8px;
+      z-index: 2000;
+    }
+
+    .color-options {
+      display: none;
+    }
+
+    .color-dropdown.open .color-options {
+      display: flex;
+    }
+
+
+    .color-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ========== expertise ========== */
+
+    .expertise-section {
+      padding: 60px 40px;
+      background-color: var(--bg-color);
+      text-align: center;
+    }
+
+    .expertise-section h2 {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--text-color);
+      margin-bottom: 50px;
+    }
+
+    .expertise-group {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+    }
+
+    .expertise-item {
+      position: relative;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease, transform 0.3s ease;
+      text-align: center;
+      width: 180px;
+      background-color: var(--dropdown-bg);
+      padding: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .expertise-item:hover {
+      transform: translateY(-8px);
+    }
+
+    .expertise-item img {
+      width: 100px;
+      height: auto;
+      margin-bottom: 15px;
+      border-radius: 12px;
+    }
+
+    .expertise-item h3 {
+      font-size: 18px;
+      color: var(--text-color);
+    }
+
+    /* Animation trigger on scroll */
+    .expertise-item.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Hover overlay styles */
+    .expertise-hover {
+      position: absolute;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
+      background-color: rgba(220, 220, 220, 0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      border-radius: 16px;
+      transform: scale(0.95);
+    }
+
+    .expertise-item:hover .expertise-hover {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+    }
+
+
+    .expertise-text {
+      color: #333;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.4;
+      max-width: 160px;
+      text-align: center;
+      white-space: pre-wrap;
+    }
   </style>
 </head>
 
@@ -409,153 +633,349 @@
         <a href="#">Self Help</a>
         <a href="#">Counsellors</a>
         <a href="#">Collaborations</a>
+
       </div>
 
-      <div class="nav-buttons">
-        <div class="mode-toggle">
-          <span id="modeLabel">Light Mode</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="modeToggle" onchange="toggleMode()" />
-            <span class="slider"></span>
-          </label>
-        </div>
+    </div>
 
-
-        <button class="btn">Sign In</button>
+    <div class="nav-buttons">
+      <div class="mode-toggle">
+        <span id="modeLabel">Light Mode</span>
+        <label class="toggle-switch">
+          <input type="checkbox" id="modeToggle" onchange="toggleMode()" />
+          <span class="slider"></span>
+        </label>
       </div>
+
+
+      <button class="btn">Sign In</button>
+    </div>
     </div>
   </header>
 
   <!-- ========== Main Banner ========== -->
+  <section class="welcome-message">
+    Hello <span class="color-transition">Anshul Kaushal</span>, how are you feeling today?
+  </section>
+
   <main>
     <h2>Welcome to betterLyf</h2>
     <p>We’re here to guide you through life’s challenges — one conversation at a time.</p>
   </main>
 
-  <!-- ========== Lottie Therapy Section ========== -->
+  <!-- ========== Lottie + Typewriter Section ========== -->
   <!-- Include dotlottie-wc player for .lottie file -->
   <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 
   <section class="therapy-section"
     style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; padding: 40px; gap: 40px;">
+
     <!-- Lottie animation -->
     <dotlottie-wc src="https://lottie.host/959423ff-284f-4c3e-ba7b-b0dac1d0c0ac/ja1TiM3zf9.lottie" autoplay loop
-      style="width: 100%; max-width: 400px;">
+      style="width: 100%; max-width: 600px; height: auto;">
     </dotlottie-wc>
 
-    <!-- Text content -->
-    <div style="flex: 1; min-width: 300px; max-width: 600px; color: var(--text-color); font-size: 16px;">
-      <p>
-        The purpose of online therapy is to give you a <span style="color:#00a9b7; font-weight: 600;">safe space for
-          disclosure</span>.
-        You’ll experience what an uninterrupted conversation feels like—free from judgment.
+    <!-- Typewriter content with subtitle -->
+    <div style="flex: 1; min-width: 300px; max-width: 600px; color: var(--text-color);">
+      <div style="font-size: 28px; font-weight: 600;">
+        We deal with <span id="typewriter-text" style="color: #00bcd4;"></span>
+      </div>
+      <p style="margin-top: 40px; font-size: 20px; line-height: 1.6;">
+        With betterLyf, you’ll receive expert guidance, a safe space to express your emotions,
+        and tools to help you grow emotionally stronger, every step of the way.
       </p>
-      <p>
-        Online counselling helps <strong style="color:#00a9b7;">identify emotional triggers</strong> and allows you to
-        <strong style="color:#00a9b7;">uncover deep-rooted concerns</strong>. With the right guidance and tools,
-        <strong style="color:#00a9b7;">you can feel happier, lighter, and stronger</strong> at every step.
-      </p>
-      <p>
-        It can help you improve relationships, beat anxiety, and become the
-        <span style="color:#00a9b7; font-weight: 600;">best version of yourself</span>.
-      </p>
-      <button
-        style="margin-top: 20px; background-color: #00bcd4; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 30px; cursor: pointer;">
-        Start Therapy
-      </button>
     </div>
-  </section>
 
 
-  <!-- ========== Footer Section ========== -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-section">
-        <div class="logo">better<span>Lyf</span></div>
-        <p>We’re here to guide you through life’s challenges — one conversation at a time.</p>
-        <div class="social-icons">
-          <a href="#"><i class="fab fa-facebook-f"></i></a>
-          <a href="#"><i class="fab fa-instagram"></i></a>
-          <a href="#"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#"><i class="fab fa-youtube"></i></a>
-          <a href="#"><i class="fab fa-twitter"></i></a>
+    <!-- ========== Typewriter Script ========== -->
+    <script>
+      var typed = new Typed('#typewriter-text', {
+        strings: [
+          'Stress and Overthinking — Let’s ease your mind 🧘‍♂️',
+          'Low Confidence? We’ll help you rediscover your worth 💪',
+          'Relationship Worries? We’re here to listen and guide 💞',
+          'Anxiety & Panic Attacks — You’re not alone 🧠',
+          'Career Confusion? Let’s find your purpose together 🎯'
+        ],
+        typeSpeed: 40,
+        backSpeed: 20,
+        loop: true
+      });
+    </script>
+
+
+
+    <!-- ===== Therapy Modules Section (Place below Lottie and above footer) ===== -->
+    <section style="background-color: var(--bg-color); padding: 80px 200px 40px;">
+      <h2 style="text-align:center; font-size: 32px; font-weight: bold; color: var(--text-color); margin-bottom: 40px;">
+        What Improves With Therapy
+      </h2>
+      <div class="therapy-cards">
+        <!-- Card 1 -->
+        <div class="therapy-card">
+          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <h3>Relationships</h3>
+          <p>Therapy helps you build relationships with your partner, family, and loved ones. It can help you move on
+            from
+            the ones that no longer work.</p>
+          <a href="#">Read More</a>
+        </div>
+        <!-- Card 2 -->
+        <div class="therapy-card">
+          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <h3>Confidence</h3>
+          <p>Online counseling can help you build confidence to thrive in life and communicate more clearly.</p>
+          <a href="#">Read More</a>
+        </div>
+        <!-- Card 3 -->
+        <div class="therapy-card">
+          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <h3>Stress</h3>
+          <p>Our stress therapy services offer a compassionate approach to help you overcome daily challenges and
+            restore
+            balance.</p>
+          <a href="#">Read More</a>
+        </div>
+        <!-- Card 4 -->
+        <div class="therapy-card">
+          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <h3>Career</h3>
+          <p>Feeling confused about your career path? Counseling offers clarity, motivation, and a goal-oriented
+            mindset.
+          </p>
+          <a href="#">Read More</a>
+        </div>
+        <!-- Card 5 -->
+        <div class="therapy-card">
+          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <h3>Anxiety</h3>
+          <p>Understand your anxiety and learn tools to reduce overthinking, regain calm, and stay present in daily
+            life.
+          </p>
+          <a href="#">Read More</a>
+        </div>
+        <!-- Card 6 -->
+        <div class="therapy-card">
+          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <h3>Self-Esteem</h3>
+          <p>Build a stronger sense of self, self-love, and trust in your abilities with guided sessions for self-worth.
+          </p>
+          <a href="#">Read More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Areas of expertise ===== -->
+
+    <section class="expertise-section">
+      <h2>Area Of Expertise</h2>
+
+      <div class="expertise-group">
+        <div class="expertise-item">
+          <img src="bkmain.png" alt="Stress">
+          <h3>Stress</h3>
+          <div class="expertise-hover">
+            <p class="expertise-text"
+              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
+          </div>
+        </div>
+
+        <div class="expertise-item">
+          <img src="bkmain.png" alt="Stress">
+          <h3>Stress</h3>
+          <div class="expertise-hover">
+            <p class="expertise-text"
+              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
+          </div>
+        </div>
+
+        <div class="expertise-item">
+          <img src="bkmain.png" alt="Stress">
+          <h3>Stress</h3>
+          <div class="expertise-hover">
+            <p class="expertise-text"
+              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="expertise-group">
+        <div class="expertise-item">
+          <img src="bkmain.png" alt="Stress">
+          <h3>Stress</h3>
+          <div class="expertise-hover">
+            <p class="expertise-text"
+              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
+          </div>
+        </div>
+
+        <div class="expertise-item">
+          <img src="bkmain.png" alt="Stress">
+          <h3>Stress</h3>
+          <div class="expertise-hover">
+            <p class="expertise-text"
+              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
+          </div>
+        </div>
+
+        <div class="expertise-item">
+          <img src="bkmain.png" alt="Stress">
+          <h3>Stress</h3>
+          <div class="expertise-hover">
+            <p class="expertise-text"
+              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- ========== Footer Section ========== -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <div class="logo">better<span>Lyf</span></div>
+          <p>We’re here to guide you through life’s challenges — one conversation at a time.</p>
+          <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>We Help With</h4>
+          <ul>
+            <li><a href="#">Stress & Anxiety</a></li>
+            <li><a href="#">Relationship Issues</a></li>
+            <li><a href="#">Confidence</a></li>
+            <li><a href="#">Career Confusion</a></li>
+            <li><a href="#">Trauma</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Self Help</a></li>
+            <li><a href="#">Articles</a></li>
+            <li><a href="#">14 Days Program</a></li>
+            <li><a href="#">Psychiatrist Support</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Customer Support</h4>
+          <p>Mon - Sat: 9:00AM - 1:00AM IST</p>
+          <p>Sun: 10:00AM - 7:00PM IST</p>
+          <h4>Am I Stressed?</h4>
+          <ul>
+            <li><a href="#">Am I depressed?</a></li>
+            <li><a href="#">How am I sleeping?</a></li>
+            <li><a href="#">Am I anxious?</a></li>
+          </ul>
         </div>
       </div>
 
-      <div class="footer-section">
-        <h4>We Help With</h4>
-        <ul>
-          <li><a href="#">Stress & Anxiety</a></li>
-          <li><a href="#">Relationship Issues</a></li>
-          <li><a href="#">Confidence</a></li>
-          <li><a href="#">Career Confusion</a></li>
-          <li><a href="#">Trauma</a></li>
-        </ul>
+      <hr />
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Virzen Wellness Private Limited</p>
+        <div class="bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms</a>
+          <a href="#">Refund</a>
+          <a href="#">FAQ</a>
+          <a href="#">Contact</a>
+        </div>
       </div>
 
-      <div class="footer-section">
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="#">Self Help</a></li>
-          <li><a href="#">Articles</a></li>
-          <li><a href="#">14 Days Program</a></li>
-          <li><a href="#">Psychiatrist Support</a></li>
-        </ul>
+      <div class="disclaimer">
+        Disclaimer: We are not a crisis helpline. For emergencies, contact medical help or helpline services.
       </div>
+    </footer>
 
-      <div class="footer-section">
-        <h4>Customer Support</h4>
-        <p>Mon - Sat: 9:00AM - 1:00AM IST</p>
-        <p>Sun: 10:00AM - 7:00PM IST</p>
-        <h4>Am I Stressed?</h4>
-        <ul>
-          <li><a href="#">Am I depressed?</a></li>
-          <li><a href="#">How am I sleeping?</a></li>
-          <li><a href="#">Am I anxious?</a></li>
-        </ul>
-      </div>
-    </div>
+    <!-- ========== JavaScript ========== -->
+    <script>
+      function toggleMode() {
+        document.body.classList.toggle("dark");
 
-    <hr />
+        const isDark = document.body.classList.contains("dark");
+        document.getElementById("modeToggle").checked = isDark;
+        document.getElementById("modeLabel").textContent = isDark ? "Dark Mode" : "Light Mode";
+      }
 
-    <div class="footer-bottom">
-      <p>&copy; 2025 Virzen Wellness Private Limited</p>
-      <div class="bottom-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms</a>
-        <a href="#">Refund</a>
-        <a href="#">FAQ</a>
-        <a href="#">Contact</a>
-      </div>
-    </div>
-
-    <div class="disclaimer">
-      Disclaimer: We are not a crisis helpline. For emergencies, contact medical help or helpline services.
-    </div>
-  </footer>
-
-  <!-- ========== JavaScript ========== -->
-  <script>
-    function toggleMode() {
-      document.body.classList.toggle("dark");
-
-      const isDark = document.body.classList.contains("dark");
-      document.getElementById("modeToggle").checked = isDark;
-      document.getElementById("modeLabel").textContent = isDark ? "Dark Mode" : "Light Mode";
-    }
-
-    window.onload = () => {
-      const isDark = document.body.classList.contains("dark");
-      document.getElementById("modeToggle").checked = isDark;
-      document.getElementById("modeLabel").textContent = isDark ? "Dark Mode" : "Light Mode";
-    };
+      window.onload = () => {
+        const isDark = document.body.classList.contains("dark");
+        document.getElementById("modeToggle").checked = isDark;
+        document.getElementById("modeLabel").textContent = isDark ? "Dark Mode" : "Light Mode";
+      };
 
 
 
-    function toggleMenu() {
-      document.body.classList.toggle("mobile-menu-open");
-    }
-  </script>
+      function toggleMenu() {
+        document.body.classList.toggle("mobile-menu-open");
+      }
+
+      function setPrimaryColor(color) {
+        document.documentElement.style.setProperty('--button-border', color);
+        document.documentElement.style.setProperty('--link-hover', color);
+
+        document.querySelectorAll(".therapy-card").forEach(card => {
+          card.style.boxShadow = `0 8px 18px ${color}55`;
+        });
+
+        document.querySelectorAll(".btn").forEach(btn => {
+          btn.style.borderColor = color;
+        });
+
+        document.querySelectorAll(".fas.fa-palette").forEach(icon => {
+          icon.style.color = color;
+        });
+      }
+
+      const expObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+            expObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2
+      });
+
+      document.querySelectorAll('.expertise-item').forEach(item => {
+        expObserver.observe(item);
+      });
+
+      document.querySelectorAll('.expertise-item').forEach(item => {
+        const textEl = item.querySelector('.expertise-text');
+        const fullText = textEl.getAttribute('data-text');
+
+        item.addEventListener('mouseenter', () => {
+          let i = 0;
+          textEl.textContent = '';
+          const interval = setInterval(() => {
+            textEl.textContent += fullText.charAt(i);
+            i++;
+            if (i >= fullText.length) clearInterval(interval);
+          }, 25);
+        });
+
+        item.addEventListener('mouseleave', () => {
+          textEl.textContent = '';
+        });
+      });
+
+
+    </script>
 
 </body>
 
