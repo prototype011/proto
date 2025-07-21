@@ -1,765 +1,900 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mega Menu with Hover</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mega Menu with Hover</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Font Awesome for social media icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <!-- Font Awesome for social media icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
 
-  <style>
-    /* Root variables for light theme */
-    :root {
-      --bg-color: white;
-      --text-color: #333;
-      --link-hover: #2d6cdf;
-      --button-bg: transparent;
-      --button-text: #2d6cdf;
-      --button-border: #2d6cdf;
-      --dropdown-bg: #eaeaea;
-    }
-
-    /* Variables for dark mode */
-    body.dark {
-      --bg-color: #121212;
-      --text-color: #f2f2f2;
-      --link-hover: #90caf9;
-      --button-bg: #2d6cdf;
-      --button-text: white;
-      --button-border: #2d6cdf;
-      --dropdown-bg: #1e1e1e;
-    }
-
-    /* General reset and base styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: 0.3s ease;
-      overflow-x: hidden;
-    }
-
-    /* ========== Header and Navbar ========== */
-    header {
-      background-color: var(--bg-color);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      padding: 14px 30px;
-      position: relative;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-      color: #2d6cdf;
-    }
-
-    .logo span {
-      color: #999;
-    }
-
-    .nav-container {
-      display: flex;
-      gap: 25px;
-      align-items: center;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 25px;
-      align-items: center;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-color);
-      font-size: 16px;
-    }
-
-    /* ========== Buttons (Dark Mode + Sign In) ========== */
-    .nav-buttons {
-      display: flex;
-      gap: 12px;
-    }
-
-    .btn {
-      padding: 7px 16px;
-      border-radius: 20px;
-      border: 1px solid var(--button-border);
-      background-color: var(--button-bg);
-      color: var(--button-text);
-      cursor: pointer;
-      font-size: 14px;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background-color: var(--link-hover);
-      color: white;
-    }
-
-    /* ========== Toggle Switch for Dark Mode ========== */
-    .toggle-switch {
-      position: relative;
-      width: 50px;
-      height: 26px;
-      display: inline-block;
-    }
-
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: 0.4s;
-      border-radius: 30px;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 20px;
-      width: 20px;
-      left: 3px;
-      bottom: 3px;
-      background-color: white;
-      transition: 0.4s;
-      border-radius: 50%;
-    }
-
-    input:checked+.slider {
-      background-color: #2d6cdf;
-    }
-
-    input:checked+.slider:before {
-      transform: translateX(24px);
-    }
-
-    /* ========== Mode Toggle Label ========== */
-    .mode-toggle {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-color);
-    }
-
-
-    /* ========== Mega Menu Dropdown ========== */
-    .dropdown {
-      position: relative;
-    }
-
-    .mega-menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 500px;
-      background-color: var(--dropdown-bg);
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(42, 29, 29, 0.15);
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(10px);
-      transition: all 0.3s ease;
-      z-index: 99;
-    }
-
-    .dropdown:hover .mega-menu {
-      opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
-    }
-
-    .mega-left ul {
-      list-style: none;
-    }
-
-    .mega-left li {
-      padding: 6px 0;
-      cursor: pointer;
-      color: var(--text-color);
-    }
-
-    .mega-left li:hover {
-      color: var(--link-hover);
-    }
-
-    .mega-right img {
-      width: 120px;
-      border-radius: 8px;
-    }
-
-    /* ========== greeting message ========== */
-    .welcome-message {
-      text-align: center;
-      padding: 40px 20px 10px;
-      font-size: 2rem;
-      font-weight: 500;
-      color: var(--text-color);
-    }
-
-    .color-transition {
-      animation: colorChange 3s ease-in-out infinite;
-      font-family: cursive;
-      font-weight: 600;
-    }
-
-    @keyframes colorChange {
-
-      0%,
-      100% {
-        color: #0004ff;
+    <style>
+      /* Root variables for light theme */
+      :root {
+        --bg-color: white;
+        --text-color: #333;
+        --link-hover: #2d6cdf;
+        --button-bg: transparent;
+        --button-text: #2d6cdf;
+        --button-border: #2d6cdf;
+        --dropdown-bg: #eaeaea;
+        --header-bg: linear-gradient(to right, #d1e8f6, #928ff0, #d1e8f6);
+        --header-shadow: rgb(245, 230, 145);
       }
 
-      50% {
-        color: #ff07ff;
+      /* Variables for dark mode */
+      body.dark {
+        --bg-color: #121212;
+        --text-color: #f2f2f2;
+        --link-hover: #90caf9;
+        --button-bg: #2d6cdf;
+        --button-text: white;
+        --button-border: #2d6cdf;
+        --dropdown-bg: #1e1e1e;
+        --header-bg: linear-gradient(to right, #2a2a2a, #404040, #2e2e2e);
+        --header-shadow: rgba(144, 202, 249, 0.3);
       }
-    }
 
+      /* General reset and base styles */
+      * {
+        font-family: "Poppins", sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    /* ========== Hero Section ========== */
-    main {
-      padding: 100px 50px;
-      text-align: center;
-      background-image: url("bkmain.png");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      color: rgb(253, 253, 253);
-      text-shadow: 2px 2px 4px rgba(6, 6, 6, 0.5);
-    }
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: 0.3s ease;
+        overflow-x: hidden;
+      }
 
-    /* ========== Footer ========== */
-    footer {
-      background-color: var(--dropdown-bg);
-      color: var(--text-color);
-      padding: 50px 30px 20px;
-      border-top: 1px solid #f9eded;
-      font-size: 15px;
-      text-align: center;
-    }
-
-    .footer-content {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      gap: 40px;
-      max-width: 1200px;
-      margin: 0 auto 30px;
-    }
-
-    .footer-section {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      min-width: 200px;
-    }
-
-    .footer-section h4 {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .footer-section ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .footer-section ul li a {
-      text-decoration: none;
-      color: var(--text-color);
-      transition: color 0.3s;
-    }
-
-    .footer-section ul li a:hover {
-      color: var(--link-hover);
-    }
-
-    .footer-section .logo {
-      margin-bottom: 10px;
-    }
-
-    .social-icons {
-      display: flex;
-      gap: 15px;
-      font-size: 20px;
-    }
-
-    .social-icons a {
-      color: #747171;
-      transition: color 0.3s;
-    }
-
-    .social-icons a:hover {
-      color: var(--link-hover);
-    }
-
-    .disclaimer {
-      font-size: 12px;
-      color: #382d2d;
-      margin-top: 10px;
-    }
-
-    .footer-bottom {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-      margin-top: 20px;
-    }
-
-    .bottom-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-
-    .bottom-links a {
-      text-decoration: none;
-      color: var(--text-color);
-    }
-
-    .bottom-links a:hover {
-      color: var(--link-hover);
-    }
-
-    /* ========== Responsive Navigation ========== */
-    .hamburger-menu {
-      display: none;
-      cursor: pointer;
-      flex-direction: column;
-      gap: 5px;
-      z-index: 101;
-    }
-
-    .hamburger-menu .bar {
-      width: 25px;
-      height: 3px;
-      background-color: var(--text-color);
-    }
-
-    @media (max-width: 780px) {
-      .hamburger-menu {
+      /* ========== Header and Navbar ========== */
+      header {
+        background: var(--header-bg);
+        box-shadow: -1px 3px 20px 0px var(--header-shadow);
+        padding: 14px 30px;
+        position: relative;
+        z-index: 10;
         display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2d6cdf;
+        transition: color 0.3s ease;
+      }
+
+      body.dark .logo {
+        color: #90caf9;
+      }
+
+      .logo span {
+        color: #999;
+        transition: color 0.3s ease;
+      }
+
+      body.dark .logo span {
+        color: #bbb;
       }
 
       .nav-container {
-        display: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex: 1;
       }
 
-      body.mobile-menu-open .nav-container {
+      .nav-center {
+        flex: 1;
         display: flex;
-        flex-direction: column;
-        position: fixed;
-        top: 60px;
-        right: 0;
-        width: 250px;
-        height: calc(100% - 60px);
-        background-color: var(--dropdown-bg);
-        padding: 30px 20px;
-        z-index: 100;
-        gap: 25px;
-        align-items: flex-start;
-        box-shadow: -2px 0 10px rgb(58, 58, 58);
+        justify-content: center;
       }
 
       .nav-links {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        position: relative;
+        text-decoration: none;
+        color: var(--text-color);
+        font-size: 1.1rem;
+        font-weight: 500;
+        padding-bottom: 5px;
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 0%;
+        height: 2px;
+        background-color: var(--link-hover);
+        transition: width 0.3s ease;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      /* ========== Buttons (Dark Mode + Sign In) ========== */
+      .nav-buttons {
+        display: flex;
+        gap: 12px;
+        font-size: 1.1rem;
+        font-weight: 400;
+      }
+
+      .btn {
+        padding: 7px 16px;
+        border-radius: 20px;
+        border: 1px solid var(--button-border);
+        background-color: var(--button-bg);
+        color: var(--button-text);
+        cursor: pointer;
+        font-size: 15px;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background-color: var(--link-hover);
+        color: white;
+      }
+
+      /* ========== Toggle Switch for Dark Mode ========== */
+      .toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 26px;
+        display: inline-block;
+      }
+
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 30px;
+      }
+
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+
+      input:checked + .slider {
+        background-color: #2d6cdf;
+      }
+
+      input:checked + .slider:before {
+        transform: translateX(24px);
+      }
+
+      /* ========== Mode Toggle Label ========== */
+      .mode-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-color);
+      }
+
+      /* ========== greeting message ========== */
+      .welcome-message {
+        text-align: center;
+        padding: 40px 20px 10px;
+        font-size: 2rem;
+        font-weight: 500;
+        color: var(--text-color);
+      }
+
+      .color-transition {
+        animation: colorChange 3s ease-in-out infinite;
+        font-family: cursive;
+        font-weight: 600;
+      }
+
+      @keyframes colorChange {
+        0%,
+        100% {
+          color: #0004ff;
+        }
+        50% {
+          color: #ff07ff;
+        }
+      }
+
+      /* ========== Hero Section ========== */
+      main {
+        padding: 100px 50px;
+        text-align: center;
+        background-image: url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: rgb(253, 253, 253);
+        text-shadow: 2px 2px 4px rgba(6, 6, 6, 0.5);
+      }
+
+      /* ========== Footer ========== */
+      footer {
+        background-color: var(--dropdown-bg);
+        color: var(--text-color);
+        padding: 50px 30px 20px;
+        border-top: 1px solid #f9eded;
+        font-size: 15px;
+        text-align: center;
+      }
+
+      .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto 30px;
+      }
+
+      .footer-section {
+        display: flex;
         flex-direction: column;
+        gap: 15px;
+        min-width: 200px;
+      }
+
+      .footer-section h4 {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .footer-section ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .footer-section ul li a {
+        text-decoration: none;
+        color: var(--text-color);
+        transition: color 0.3s;
+      }
+
+      .footer-section ul li a:hover {
+        color: var(--link-hover);
+      }
+
+      .footer-section .logo {
+        margin-bottom: 10px;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 15px;
+        font-size: 20px;
+      }
+
+      .social-icons a {
+        color: #747171;
+        transition: color 0.3s;
+      }
+
+      .social-icons a:hover {
+        color: var(--link-hover);
+      }
+
+      .disclaimer {
+        font-size: 12px;
+        color: #382d2d;
+        margin-top: 10px;
+      }
+
+      .footer-bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .bottom-links {
+        display: flex;
+        flex-wrap: wrap;
         gap: 20px;
       }
 
-      .nav-buttons {
-        flex-direction: column;
-        gap: 15px;
+      .bottom-links a {
+        text-decoration: none;
+        color: var(--text-color);
       }
-    }
 
+      .bottom-links a:hover {
+        color: var(--link-hover);
+      }
 
+      /* ========== Responsive Navigation ========== */
+      .hamburger-menu {
+        display: none;
+        cursor: pointer;
+        flex-direction: column;
+        gap: 5px;
+        z-index: 101;
+      }
 
-    /* ========== cards ========== */
-    .therapy-cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      max-width: 1300px;
-      margin: auto;
-    }
+      .hamburger-menu .bar {
+        width: 25px;
+        height: 3px;
+        background-color: var(--text-color);
+        transition: background-color 0.3s ease;
+      }
 
-    .therapy-card {
-      background-color: var(--dropdown-bg);
-      border-radius: 12px;
-      padding: 25px;
-      width: 320px;
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-      text-align: center;
-      transition: transform 0.3s ease;
-    }
+      @media (max-width: 780px) {
+        .hamburger-menu {
+          display: flex;
+        }
 
-    .therapy-card:hover {
-      transform: translateY(-5px);
-    }
+        .nav-container {
+          display: none;
+        }
 
-    .therapy-img {
-      width: 120px;
-      height: 120px;
-      border-radius: 16px;
-      background-size: cover;
-      background-position: center;
-      margin: 0 auto 20px;
-    }
+        body.mobile-menu-open .nav-container {
+          display: flex;
+          flex-direction: column;
+          position: fixed;
+          top: 60px;
+          right: 0;
+          width: 250px;
+          height: calc(100% - 60px);
+          background-color: var(--dropdown-bg);
+          padding: 30px 20px;
+          z-index: 100;
+          gap: 25px;
+          align-items: flex-start;
+          box-shadow: -2px 0 10px rgba(58, 58, 58, 0.5);
+        }
 
-    .therapy-card h3 {
-      margin-bottom: 12px;
-      font-size: 20px;
-      color: var(--text-color);
-    }
+        .nav-links {
+          flex-direction: column;
+          gap: 20px;
+        }
 
-    .therapy-card p {
-      font-size: 15px;
-      color: var(--text-color);
-      margin-bottom: 15px;
-    }
+        .nav-buttons {
+          flex-direction: column;
+          gap: 15px;
+        }
+      }
 
-    .therapy-card a {
-      text-decoration: none;
-      color: #00bcd4;
-      font-weight: bold;
-    }
+      /* ========== cards ========== */
+      .therapy-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 30px;
+        max-width: 1300px;
+        margin: auto;
+      }
 
-    .therapy-card a:hover {
-      color: var(--link-hover);
-    }
+      .therapy-card {
+        background-color: var(--dropdown-bg);
+        border-radius: 12px;
+        padding: 25px;
+        width: 320px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        transition: transform 0.3s ease;
+      }
 
-    /* ========== color plate ========== */
-    .color-dropdown {
-      position: relative;
-      cursor: pointer;
-    }
+      .therapy-card:hover {
+        transform: translateY(-10px);
+      }
 
-    .color-dropdown i {
-      font-size: 20px;
-      margin-left: 5px;
-      color: var(--button-border);
-      transition: color 0.3s ease;
-    }
+      .therapy-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 16px;
+        background-size: cover;
+        background-position: center;
+        margin: 0 auto 20px;
+      }
 
-    .color-options {
-      position: absolute;
-      top: 30px;
-      left: -10px;
-      display: none;
-      background-color: var(--dropdown-bg);
-      padding: 10px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      flex-direction: row;
-      gap: 8px;
-      z-index: 2000;
-    }
+      .therapy-card h3 {
+        margin-bottom: 12px;
+        font-size: 20px;
+        color: var(--text-color);
+      }
 
-    .color-options {
-      display: none;
-    }
+      .therapy-card p {
+        font-size: 15px;
+        color: var(--text-color);
+        margin-bottom: 15px;
+      }
 
-    .color-dropdown.open .color-options {
-      display: flex;
-    }
+      .therapy-card a {
+        text-decoration: none;
+        color: #00bcd4;
+        font-weight: bold;
+      }
 
+      .therapy-card a:hover {
+        color: var(--link-hover);
+      }
 
-    .color-dot {
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid white;
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
-    }
+      /* ========== color plate ========== */
+      .color-dropdown {
+        position: relative;
+        cursor: pointer;
+      }
 
-    /* ========== expertise ========== */
+      .color-dropdown i {
+        font-size: 20px;
+        margin-left: 5px;
+        color: var(--button-border);
+        transition: color 0.3s ease;
+      }
 
-    .expertise-section {
-      padding: 60px 40px;
-      background-color: var(--bg-color);
-      text-align: center;
-    }
+      .color-options {
+        position: absolute;
+        top: 30px;
+        left: -10px;
+        display: none;
+        background-color: var(--dropdown-bg);
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        flex-direction: row;
+        gap: 8px;
+        z-index: 2000;
+      }
 
-    .expertise-section h2 {
-      font-size: 32px;
-      font-weight: bold;
-      color: var(--text-color);
-      margin-bottom: 50px;
-    }
+      .color-dropdown.open .color-options {
+        display: flex;
+      }
 
-    .expertise-group {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      margin-bottom: 60px;
-      flex-wrap: wrap;
-    }
+      .color-dot {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+      }
 
-    .expertise-item {
-      position: relative;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 0.8s ease, transform 0.3s ease;
-      text-align: center;
-      width: 180px;
-      background-color: var(--dropdown-bg);
-      padding: 20px;
-      border-radius: 12px;
-      overflow: hidden;
-    }
+      /* ========== expertise ========== */
+      .expertise-container {
+        width: 100%;
+        background-color: #b9bec6;
+        padding: 60px 0;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+      }
 
-    .expertise-item:hover {
-      transform: translateY(-8px);
-    }
+      .expertise-bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(8px) brightness(0.8);
+        opacity: 0;
+        transition: opacity 0.6s ease, background-image 0.4s ease;
+        z-index: 0;
+      }
 
-    .expertise-item img {
-      width: 100px;
-      height: auto;
-      margin-bottom: 15px;
-      border-radius: 12px;
-    }
+      .expertise-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        color: white;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        transition: filter 0.4s ease;
+      }
 
-    .expertise-item h3 {
-      font-size: 18px;
-      color: var(--text-color);
-    }
+      .expertise-section.blur-active {
+        filter: blur(1px);
+      }
 
-    /* Animation trigger on scroll */
-    .expertise-item.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+      .expertise-section h2 {
+        font-size: 32px;
+        font-weight: bold;
+        color: var(--text-color);
+        margin-bottom: 50px;
+      }
 
-    /* Hover overlay styles */
-    .expertise-hover {
-      position: absolute;
-      top: -10%;
-      left: -10%;
-      width: 120%;
-      height: 120%;
-      background-color: rgba(220, 220, 220, 0.95);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease, transform 0.4s ease;
-      border-radius: 16px;
-      transform: scale(0.95);
-    }
+      .expertise-group {
+        display: flex;
+        justify-content: center;
+        gap: 150px;
+        margin-bottom: 60px;
+        flex-wrap: wrap;
+      }
 
-    .expertise-item:hover .expertise-hover {
-      opacity: 1;
-      pointer-events: auto;
-      transform: scale(1);
-    }
+      .expertise-item {
+        position: relative;
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease, transform 0.3s ease;
+        text-align: center;
+        width: 180px;
+        background-color: var(--dropdown-bg);
+        padding: 15px;
+        border-radius: 12px;
+        overflow: hidden;
+        z-index: 2;
+      }
 
+      .expertise-item:hover {
+        transform: translateY(-10px);
+        z-index: 3;
+      }
 
-    .expertise-text {
-      color: #333;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.4;
-      max-width: 160px;
-      text-align: center;
-      white-space: pre-wrap;
-    }
-  </style>
-</head>
+      .expertise-item img {
+        width: 100px;
+        height: auto;
+        margin-bottom: 15px;
+        border-radius: 12px;
+      }
 
-<body>
+      .expertise-item h3 {
+        font-size: 18px;
+        color: var(--text-color);
+      }
 
-  <!-- ========== Header ========== -->
-  <header>
-    <div class="logo">better<span>Lyf</span></div>
+      .expertise-item.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-    <div class="hamburger-menu" onclick="toggleMenu()">
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-    </div>
+      .expertise-hover {
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        width: 120%;
+        height: 120%;
+        background-color: rgba(220, 220, 220, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        border-radius: 16px;
+        transform: scale(0.95);
+      }
 
-    <div class="nav-container">
-      <div class="nav-links">
-        <div class="dropdown">
-          <a href="#">We Help With</a>
-          <div class="mega-menu">
-            <div class="mega-left">
-              <ul>
-                <li>Confidence</li>
-                <li>Stress & Anxiety</li>
-                <li>Relationship Issues</li>
-                <li>Career Confusion</li>
-              </ul>
-            </div>
-            <div class="mega-right">
-              <img src="bkmain.png" alt="Preview" />
-            </div>
+      .expertise-item:hover .expertise-hover {
+        opacity: 1;
+        pointer-events: auto;
+        transform: scale(1);
+      }
+
+      .expertise-text {
+        color: #333;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.4;
+        max-width: 160px;
+        text-align: center;
+        white-space: pre-wrap;
+      }
+      .expertise-container {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .expertise-bg-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(8px) brightness(0.8);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: 0;
+        will-change: opacity, background-image;
+      }
+
+      .expertise-section {
+        position: relative;
+        z-index: 1;
+      }
+
+      /* ========== Dark Mode Styling for Expertise Section ========== */
+      body.dark .expertise-container {
+        background-color: #2a2a2a;
+      }
+
+      body.dark .expertise-hover {
+        position: absolute;
+        top: -10%;
+        left: -10%;
+        width: 120%;
+        height: 120%;
+        background-color: rgba(35, 34, 34, 0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        border-radius: 16px;
+        transform: scale(0.95);
+      }
+
+      body.dark .expertise-text {
+        color: #ffffff;
+      }
+      body.dark .expertise-item {
+        background-color: #1e1e1e;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ========== Header ========== -->
+    <header>
+      <div class="logo">better<span>Lyf</span></div>
+
+      <div class="hamburger-menu" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
+      <div class="nav-container">
+        <div class="nav-center">
+          <div class="nav-links">
+            <a href="#">We help with</a>
+            <a href="#">Self Help</a>
+            <a href="#">Counsellors</a>
+            <a href="#">Collaborations</a>
           </div>
         </div>
-        <a href="#">Self Help</a>
-        <a href="#">Counsellors</a>
-        <a href="#">Collaborations</a>
 
+        <div class="nav-buttons">
+          <div class="mode-toggle">
+            <span id="modeLabel">Light Mode</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="modeToggle" onchange="toggleMode()" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <button class="btn">Sign In</button>
+        </div>
       </div>
+    </header>
 
-    </div>
+    <!-- ========== Main Banner ========== -->
+    <section class="welcome-message">
+      Hello <span class="color-transition">Anshul Kaushal</span>, how are you
+      feeling today?
+    </section>
 
-    <div class="nav-buttons">
-      <div class="mode-toggle">
-        <span id="modeLabel">Light Mode</span>
-        <label class="toggle-switch">
-          <input type="checkbox" id="modeToggle" onchange="toggleMode()" />
-          <span class="slider"></span>
-        </label>
-      </div>
-
-
-      <button class="btn">Sign In</button>
-    </div>
-    </div>
-  </header>
-
-  <!-- ========== Main Banner ========== -->
-  <section class="welcome-message">
-    Hello <span class="color-transition">Anshul Kaushal</span>, how are you feeling today?
-  </section>
-
-  <main>
-    <h2>Welcome to betterLyf</h2>
-    <p>We’re here to guide you through life’s challenges — one conversation at a time.</p>
-  </main>
-
-  <!-- ========== Lottie + Typewriter Section ========== -->
-  <!-- Include dotlottie-wc player for .lottie file -->
-  <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js" type="module"></script>
-  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-
-  <section class="therapy-section"
-    style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; padding: 40px; gap: 40px;">
-
-    <!-- Lottie animation -->
-    <dotlottie-wc src="https://lottie.host/959423ff-284f-4c3e-ba7b-b0dac1d0c0ac/ja1TiM3zf9.lottie" autoplay loop
-      style="width: 100%; max-width: 600px; height: auto;">
-    </dotlottie-wc>
-
-    <!-- Typewriter content with subtitle -->
-    <div style="flex: 1; min-width: 300px; max-width: 600px; color: var(--text-color);">
-      <div style="font-size: 28px; font-weight: 600;">
-        We deal with <br><span id="typewriter-text" style="color: #00bcd4;"></span>
-      </div>
-      <p style="margin-top: 15px; font-size: 20px; line-height: 1.6;">
-        With betterLyf, you’ll receive expert guidance, a safe space to express your emotions,
-        and tools to help you grow emotionally stronger, every step of the way.
+    <main>
+      <h2>Welcome to betterLyf</h2>
+      <p>
+        We're here to guide you through life's challenges — one conversation at
+        a time.
       </p>
-    </div>
+    </main>
 
+    <!-- ========== Lottie + Typewriter Section ========== -->
+    <script
+      src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.3.0/dist/dotlottie-wc.js"
+      type="module"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <section
+      class="therapy-section"
+      style="
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        padding: 40px;
+        gap: 40px;
+      "
+    >
+      <!-- Lottie animation -->
+      <dotlottie-wc
+        src="https://lottie.host/959423ff-284f-4c3e-ba7b-b0dac1d0c0ac/ja1TiM3zf9.lottie"
+        autoplay
+        loop
+        style="width: 100%; max-width: 600px; height: auto"
+      >
+      </dotlottie-wc>
+
+      <!-- Typewriter content with subtitle -->
+      <div
+        style="
+          flex: 1;
+          min-width: 300px;
+          max-width: 600px;
+          color: var(--text-color);
+        "
+      >
+        <div style="font-size: 28px; font-weight: 600">
+          We deal with <br /><span
+            id="typewriter-text"
+            style="color: #00bcd4"
+          ></span>
+        </div>
+        <p style="margin-top: 15px; font-size: 20px; line-height: 1.6">
+          With betterLyf, you'll receive expert guidance, a safe space to
+          express your emotions, and tools to help you grow emotionally
+          stronger, every step of the way.
+        </p>
+      </div>
+    </section>
 
     <!-- ========== Typewriter Script ========== -->
     <script>
-      var typed = new Typed('#typewriter-text', {
+      var typed = new Typed("#typewriter-text", {
         strings: [
-          'Stress & Anxiety? Let’s calm your mind 🧘‍♂️',
-          'Low Confidence? Rediscover your worth 💪',
-          'Relationship Worries? We’ll guide you 💞',
-          'Anxiety or Panic? You’re not alone 🧠',
-          'Career Confused? Find your path 🎯'
+          "Stress & Anxiety? Let's calm your mind 🧘‍♂️",
+          "Low Confidence? Rediscover your worth 💪",
+          "Relationship Worries? Well guide you 💞",
+          "Anxiety or Panic? Youre not alone 🧠",
+          "Career Confused? Find your path 🎯",
         ],
         typeSpeed: 40,
         backSpeed: 20,
-        loop: true
+        loop: true,
       });
     </script>
 
-
-
-    <!-- ===== Therapy Modules Section (Place below Lottie and above footer) ===== -->
-    <section style="background-color: var(--bg-color); padding: 80px 200px 40px;">
-      <h2 style="text-align:center; font-size: 32px; font-weight: bold; color: var(--text-color); margin-bottom: 40px;">
+    <!-- ===== Therapy Modules Section ===== -->
+    <section
+      style="background-color: var(--bg-color); padding: 80px 200px 40px"
+    >
+      <h2
+        style="
+          text-align: center;
+          font-size: 32px;
+          font-weight: bold;
+          color: var(--text-color);
+          margin-bottom: 40px;
+        "
+      >
         What Improves With Therapy
       </h2>
       <div class="therapy-cards">
         <!-- Card 1 -->
         <div class="therapy-card">
-          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <div
+            class="therapy-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');
+            "
+          ></div>
           <h3>Relationships</h3>
-          <p>Therapy helps you build relationships with your partner, family, and loved ones. It can help you move on
-            from
-            the ones that no longer work.</p>
+          <p>
+            Therapy helps you build relationships with your partner, family, and
+            loved ones. It can help you move on from the ones that no longer
+            work.
+          </p>
           <a href="#">Read More</a>
         </div>
         <!-- Card 2 -->
         <div class="therapy-card">
-          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <div
+            class="therapy-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');
+            "
+          ></div>
           <h3>Confidence</h3>
-          <p>Online counseling can help you build confidence to thrive in life and communicate more clearly.</p>
+          <p>
+            Online counseling can help you build confidence to thrive in life
+            and communicate more clearly.
+          </p>
           <a href="#">Read More</a>
         </div>
         <!-- Card 3 -->
         <div class="therapy-card">
-          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <div
+            class="therapy-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');
+            "
+          ></div>
           <h3>Stress</h3>
-          <p>Our stress therapy services offer a compassionate approach to help you overcome daily challenges and
-            restore
-            balance.</p>
+          <p>
+            Our stress therapy services offer a compassionate approach to help
+            you overcome daily challenges and restore balance.
+          </p>
           <a href="#">Read More</a>
         </div>
         <!-- Card 4 -->
         <div class="therapy-card">
-          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <div
+            class="therapy-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');
+            "
+          ></div>
           <h3>Career</h3>
-          <p>Feeling confused about your career path? Counseling offers clarity, motivation, and a goal-oriented
-            mindset.
+          <p>
+            Feeling confused about your career path? Counseling offers clarity,
+            motivation, and a goal-oriented mindset.
           </p>
           <a href="#">Read More</a>
         </div>
         <!-- Card 5 -->
         <div class="therapy-card">
-          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <div
+            class="therapy-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');
+            "
+          ></div>
           <h3>Anxiety</h3>
-          <p>Understand your anxiety and learn tools to reduce overthinking, regain calm, and stay present in daily
-            life.
+          <p>
+            Understand your anxiety and learn tools to reduce overthinking,
+            regain calm, and stay present in daily life.
           </p>
           <a href="#">Read More</a>
         </div>
         <!-- Card 6 -->
         <div class="therapy-card">
-          <div class="therapy-img" style="background-image: url('bkmain.png');"></div>
+          <div
+            class="therapy-img"
+            style="
+              background-image: url('https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80');
+            "
+          ></div>
           <h3>Self-Esteem</h3>
-          <p>Build a stronger sense of self, self-love, and trust in your abilities with guided sessions for self-worth.
+          <p>
+            Build a stronger sense of self, self-love, and trust in your
+            abilities with guided sessions for self-worth.
           </p>
           <a href="#">Read More</a>
         </div>
@@ -767,79 +902,110 @@
     </section>
 
     <!-- ===== Areas of expertise ===== -->
+    <section class="expertise-container">
+      <div class="expertise-bg-overlay"></div>
+      <div class="expertise-section">
+        <h2>Area Of Expertise</h2>
 
-    <section class="expertise-section">
-      <h2>Area Of Expertise</h2>
+        <div class="expertise-group">
+          <div class="expertise-item">
+            <img
+              src="https://images.unsplash.com/photo-1544027993-37dbfe43562a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+              alt="Stress"
+            />
+            <h3>Stress</h3>
+            <div class="expertise-hover">
+              <p
+                class="expertise-text"
+                data-text="Stop stressing, start healing. Let us help you bring peace back into your life."
+              ></p>
+            </div>
+          </div>
 
-      <div class="expertise-group">
-        <div class="expertise-item">
-          <img src="bkmain.png" alt="Stress">
-          <h3>Stress</h3>
-          <div class="expertise-hover">
-            <p class="expertise-text"
-              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
+          <div class="expertise-item">
+            <img
+              src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+              alt="Anxiety"
+            />
+            <h3>Anxiety</h3>
+            <div class="expertise-hover">
+              <p
+                class="expertise-text"
+                data-text="Take control of your anxiety with proven techniques and professional guidance."
+              ></p>
+            </div>
+          </div>
+
+          <div class="expertise-item">
+            <img
+              src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+              alt="Relationships"
+            />
+            <h3>Relationships</h3>
+            <div class="expertise-hover">
+              <p
+                class="expertise-text"
+                data-text="Build stronger, healthier relationships with those who matter most to you."
+              ></p>
+            </div>
           </div>
         </div>
 
-        <div class="expertise-item">
-          <img src="bkmain.png" alt="Stress">
-          <h3>Stress</h3>
-          <div class="expertise-hover">
-            <p class="expertise-text"
-              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
+        <div class="expertise-group">
+          <div class="expertise-item">
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+              alt="Confidence"
+            />
+            <h3>Confidence</h3>
+            <div class="expertise-hover">
+              <p
+                class="expertise-text"
+                data-text="Unlock your potential and build unshakeable confidence in yourself."
+              ></p>
+            </div>
+          </div>
+
+          <div class="expertise-item">
+            <img
+              src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+              alt="Career"
+            />
+            <h3>Career</h3>
+            <div class="expertise-hover">
+              <p
+                class="expertise-text"
+                data-text="Navigate your career path with clarity, purpose, and professional growth."
+              ></p>
+            </div>
+          </div>
+
+          <div class="expertise-item">
+            <img
+              src="https://images.unsplash.com/photo-1529068755536-a5ade0dcb4e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+              alt="Self-Esteem"
+            />
+            <h3>Self-Esteem</h3>
+            <div class="expertise-hover">
+              <p
+                class="expertise-text"
+                data-text="Develop a positive self-image and learn to value yourself authentically."
+              ></p>
+            </div>
           </div>
         </div>
-
-        <div class="expertise-item">
-          <img src="bkmain.png" alt="Stress">
-          <h3>Stress</h3>
-          <div class="expertise-hover">
-            <p class="expertise-text"
-              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="expertise-group">
-        <div class="expertise-item">
-          <img src="bkmain.png" alt="Stress">
-          <h3>Stress</h3>
-          <div class="expertise-hover">
-            <p class="expertise-text"
-              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
-          </div>
-        </div>
-
-        <div class="expertise-item">
-          <img src="bkmain.png" alt="Stress">
-          <h3>Stress</h3>
-          <div class="expertise-hover">
-            <p class="expertise-text"
-              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
-          </div>
-        </div>
-
-        <div class="expertise-item">
-          <img src="bkmain.png" alt="Stress">
-          <h3>Stress</h3>
-          <div class="expertise-hover">
-            <p class="expertise-text"
-              data-text="Stop stressing, start healing. Let us help you bring peace back into your life."></p>
-          </div>
-        </div>
-
       </div>
     </section>
-
-
 
     <!-- ========== Footer Section ========== -->
     <footer>
       <div class="footer-content">
         <div class="footer-section">
           <div class="logo">better<span>Lyf</span></div>
-          <p>We’re here to guide you through life’s challenges — one conversation at a time.</p>
+          <p>
+            We're here to guide you through life's challenges — one conversation
+            at a time.
+          </p>
           <div class="social-icons">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
@@ -897,7 +1063,8 @@
       </div>
 
       <div class="disclaimer">
-        Disclaimer: We are not a crisis helpline. For emergencies, contact medical help or helpline services.
+        Disclaimer: We are not a crisis helpline. For emergencies, contact
+        medical help or helpline services.
       </div>
     </footer>
 
@@ -908,60 +1075,65 @@
 
         const isDark = document.body.classList.contains("dark");
         document.getElementById("modeToggle").checked = isDark;
-        document.getElementById("modeLabel").textContent = isDark ? "Dark Mode" : "Light Mode";
+        document.getElementById("modeLabel").textContent = isDark
+          ? "Dark Mode"
+          : "Light Mode";
       }
 
       window.onload = () => {
         const isDark = document.body.classList.contains("dark");
         document.getElementById("modeToggle").checked = isDark;
-        document.getElementById("modeLabel").textContent = isDark ? "Dark Mode" : "Light Mode";
+        document.getElementById("modeLabel").textContent = isDark
+          ? "Dark Mode"
+          : "Light Mode";
       };
-
-
 
       function toggleMenu() {
         document.body.classList.toggle("mobile-menu-open");
       }
 
       function setPrimaryColor(color) {
-        document.documentElement.style.setProperty('--button-border', color);
-        document.documentElement.style.setProperty('--link-hover', color);
+        document.documentElement.style.setProperty("--button-border", color);
+        document.documentElement.style.setProperty("--link-hover", color);
 
-        document.querySelectorAll(".therapy-card").forEach(card => {
+        document.querySelectorAll(".therapy-card").forEach((card) => {
           card.style.boxShadow = `0 8px 18px ${color}55`;
         });
 
-        document.querySelectorAll(".btn").forEach(btn => {
+        document.querySelectorAll(".btn").forEach((btn) => {
           btn.style.borderColor = color;
         });
 
-        document.querySelectorAll(".fas.fa-palette").forEach(icon => {
+        document.querySelectorAll(".fas.fa-palette").forEach((icon) => {
           icon.style.color = color;
         });
       }
 
-      const expObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('show');
-            expObserver.unobserve(entry.target);
-          }
-        });
-      }, {
-        threshold: 0.2
-      });
+      const expObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+              expObserver.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.2,
+        }
+      );
 
-      document.querySelectorAll('.expertise-item').forEach(item => {
+      document.querySelectorAll(".expertise-item").forEach((item) => {
         expObserver.observe(item);
       });
 
-      document.querySelectorAll('.expertise-item').forEach(item => {
-        const textEl = item.querySelector('.expertise-text');
-        const fullText = textEl.getAttribute('data-text');
+      document.querySelectorAll(".expertise-item").forEach((item) => {
+        const textEl = item.querySelector(".expertise-text");
+        const fullText = textEl.getAttribute("data-text");
 
-        item.addEventListener('mouseenter', () => {
+        item.addEventListener("mouseenter", () => {
           let i = 0;
-          textEl.textContent = '';
+          textEl.textContent = "";
           const interval = setInterval(() => {
             textEl.textContent += fullText.charAt(i);
             i++;
@@ -969,14 +1141,28 @@
           }, 25);
         });
 
-        item.addEventListener('mouseleave', () => {
-          textEl.textContent = '';
+        item.addEventListener("mouseleave", () => {
+          textEl.textContent = "";
         });
       });
-
-
     </script>
+    <script>
+      const bgOverlay = document.querySelector(".expertise-bg-overlay");
 
-</body>
+      // Loop through each expertise item
+      document.querySelectorAll(".expertise-item").forEach((item) => {
+        const img = item.querySelector("img");
 
+        item.addEventListener("mouseenter", () => {
+          const imgSrc = img.getAttribute("src");
+          bgOverlay.style.backgroundImage = `url(${imgSrc})`;
+          bgOverlay.style.opacity = "1";
+        });
+
+        item.addEventListener("mouseleave", () => {
+          bgOverlay.style.opacity = "0";
+        });
+      });
+    </script>
+  </body>
 </html>
